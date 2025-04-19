@@ -4,8 +4,8 @@ class Solution {
         // straigforward mapping
         if (numRows == 1 || s.length() < numRows) return s;
 
-        StringBuilder sb = new StringBuilder();
-        char[] str = s.toCharArray();
+        char[] source = s.toCharArray();
+        char[] memory = new char[source.length];
 
         final int jump = 2*numRows-2;
         boolean distanceSwitch = false;
@@ -13,9 +13,9 @@ class Solution {
         int x = 0;
         int dx = 0;
 
-        for (int i = 0; i < str.length; i++)
+        for (int i = 0; i < source.length; i++)
         {
-            sb.append(str[x]);
+            memory[i] = source[x];
 
             if (row == 0 || row == numRows-1)
             {
@@ -32,14 +32,15 @@ class Solution {
             x += dx;
 
             distanceSwitch = !distanceSwitch;
-            if (x >= str.length)
+            if (x >= source.length)
             {
+                distanceSwitch = false;
                 row++;
                 x = row;
-                distanceSwitch = false;
             }
         }
-        return sb.toString();
+
+        return new String(memory);
     }
 }
 
